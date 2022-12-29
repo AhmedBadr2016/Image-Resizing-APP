@@ -39,17 +39,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var sharp_1 = __importDefault(require("sharp"));
-// resizing function
-var resizefun = function (height, width, inputpath, outputpath) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, sharp_1.default)(inputpath).resize({ height: height, width: width }).toFile(outputpath)];
-            case 1:
-                _a.sent();
-                console.log('resizing is done');
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.default = resizefun;
+var images_path_1 = __importDefault(require("../utility/images_path"));
+var resize_1 = __importDefault(require("../utility/resize"));
+var fs_1 = __importDefault(require("fs"));
+describe('Test endpoint responses', function () {
+    it('test expect to pass', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            (0, resize_1.default)(1000, 800, "".concat(images_path_1.default, "/fjord.jpg"), "".concat(images_path_1.default, "/cashing/fjord_resize1000x800.jpg"));
+            expect(fs_1.default.existsSync("".concat(images_path_1.default, "/cashing/fjord_resize1000x800.jpg"))).toBeTruthy();
+            return [2 /*return*/];
+        });
+    }); });
+});

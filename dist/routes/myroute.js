@@ -45,6 +45,7 @@ var images_path_1 = __importDefault(require("../utility/images_path"));
 var resize_1 = __importDefault(require("../utility/resize"));
 var fs_1 = __importDefault(require("fs"));
 var image = express_1.default.Router();
+var resizeflag = false;
 image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, filename, height, width, valid_filename, valid_height, valid_width;
     return __generator(this, function (_b) {
@@ -54,13 +55,7 @@ image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 valid_filename = filename;
                 valid_height = parseInt(height);
                 valid_width = parseInt(width);
-                if (!fs_1.default
-                    .readdirSync("".concat(images_path_1.default, "/cashing"))
-                    .includes("".concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))) return [3 /*break*/, 1];
-                res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
-                return [3 /*break*/, 15];
-            case 1:
-                if (!(Number.isNaN(valid_height) && Number.isNaN(valid_width))) return [3 /*break*/, 2];
+                if (!(Number.isNaN(valid_height) && Number.isNaN(valid_width))) return [3 /*break*/, 1];
                 // No height nor width
                 console.log('image without height & width');
                 if (fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg")) &&
@@ -78,11 +73,21 @@ image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                         .send('put you image in the images folder & enter the height and width as positive number');
                 }
                 return [3 /*break*/, 15];
-            case 2:
+            case 1:
                 if (!(valid_height > 0 && valid_width > 0)) return [3 /*break*/, 6];
                 // both the height & width are positive numbers
                 console.log('Both height & width are positive');
-                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 4];
+                if (!fs_1.default
+                    .readdirSync("".concat(images_path_1.default, "/cashing"))
+                    .includes("".concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))) return [3 /*break*/, 2];
+                // if we resized the image before so no need to resize just get it
+                console.log('we resized the image before so no need to resize just get it');
+                res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
+                resizeflag = true;
+                return [3 /*break*/, 5];
+            case 2:
+                if (!(fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg")) &&
+                    resizeflag == false)) return [3 /*break*/, 4];
                 // we found the image in images folder and ready for resizing with the desired height and width
                 console.log('we found the image in images folder and ready for resizing with the desired height and width');
                 return [4 /*yield*/, (0, resize_1.default)(valid_height, valid_width, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))];
@@ -91,18 +96,9 @@ image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
                 return [3 /*break*/, 5];
             case 4:
-                if (fs_1.default
-                    .readdirSync("".concat(images_path_1.default, "/cashing"))
-                    .includes("".concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))) {
-                    // if we resized the image before so no need to resize just get it
-                    console.log('we resized the image before so no need to resize just get it');
-                    res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
-                }
-                else {
-                    // the height and width are positive numbers but the image is not found in the image folder
-                    console.log('the height and width are positive numbers but the image is not found in the image folder');
-                    res.status(404).send('put you image in the images folder');
-                }
+                // the height and width are positive numbers but the image is not found in the image folder
+                console.log('the height and width are positive numbers but the image is not found in the image folder');
+                res.status(404).send('put you image in the images folder');
                 _b.label = 5;
             case 5: return [3 /*break*/, 15];
             case 6:

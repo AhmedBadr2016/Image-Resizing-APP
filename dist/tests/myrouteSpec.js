@@ -39,17 +39,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var sharp_1 = __importDefault(require("sharp"));
-// resizing function
-var resizefun = function (height, width, inputpath, outputpath) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, sharp_1.default)(inputpath).resize({ height: height, width: width }).toFile(outputpath)];
-            case 1:
-                _a.sent();
-                console.log('resizing is done');
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.default = resizefun;
+var supertest_1 = __importDefault(require("supertest"));
+var myroute_1 = __importDefault(require("../routes/myroute"));
+var request = (0, supertest_1.default)(myroute_1.default);
+describe('Test endpoint responses', function () {
+    it('test expect to fail', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get('/images?filename=fjord')];
+                case 1:
+                    response = _a.sent();
+                    expect(response.status).toEqual(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
