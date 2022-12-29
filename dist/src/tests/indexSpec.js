@@ -44,105 +44,98 @@ var supertest_1 = __importDefault(require("supertest"));
 var request = (0, supertest_1.default)(index_1.default);
 // some tests
 describe('Test endpoint responses', function () {
-    it('test expect to fail', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to fail', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/images?filename=hello')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(404);
-                    done();
+                    expect(response.status).toEqual(404);
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('Test endpoint responses', function () {
-    it('test expect to pass', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to pass', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/images?filename=fjord&height=1000&width=2000')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(200);
-                    done();
+                    expect(response.status).toEqual(200);
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('Test endpoint responses', function () {
-    it('test expect to pass', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to pass', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/images?filename=fjord&height=1000')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(200);
-                    done();
+                    expect(response.status).toEqual(200);
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('Test endpoint responses', function () {
-    it('test expect to pass', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to pass', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/images?filename=fjord&width=600')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(200);
-                    done();
+                    expect(response.status).toEqual(200);
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('Test endpoint responses', function () {
-    it('test expect to pass', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to fail', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('images?filename=fjord&width=p')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(404);
-                    done();
+                    expect(response.status).toEqual(404);
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('Test endpoint responses', function () {
-    it('test expect to pass', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to fail', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('/images?filename=fjord&height=N')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(404);
-                    done();
+                    expect(response.status).toEqual(404);
                     return [2 /*return*/];
             }
         });
     }); });
 });
 describe('Test endpoint responses', function () {
-    it('test expect to pass', function (done) { return __awaiter(void 0, void 0, void 0, function () {
+    it('test expect to pass', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request.get('//images?filename=santamonica&height=1000&width=1200')];
                 case 1:
                     response = _a.sent();
-                    expect(response.status).toBe(200);
-                    done();
+                    expect(response.status).toEqual(200);
                     return [2 /*return*/];
             }
         });

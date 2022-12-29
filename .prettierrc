@@ -1,5 +1,4 @@
 {
-  "space-before-function-paren": ["error", "always"],
-  "semi": false,
+  "semi": true,
   "singleQuote": true
 }

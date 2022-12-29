@@ -45,7 +45,6 @@ var images_path_1 = __importDefault(require("../utility/images_path"));
 var resize_1 = __importDefault(require("../utility/resize"));
 var fs_1 = __importDefault(require("fs"));
 var image = express_1.default.Router();
-var port = 3000;
 image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, filename, height, width, valid_filename, valid_height, valid_width;
     return __generator(this, function (_b) {
@@ -55,12 +54,13 @@ image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 valid_filename = filename;
                 valid_height = parseInt(height);
                 valid_width = parseInt(width);
-                console.log(filename);
-                console.log(height);
-                console.log(typeof height);
-                console.log(valid_width);
-                console.log(typeof valid_width);
-                if (!(Number.isNaN(valid_height) && Number.isNaN(valid_width))) return [3 /*break*/, 1];
+                if (!fs_1.default
+                    .readdirSync("".concat(images_path_1.default, "/cashing"))
+                    .includes("".concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))) return [3 /*break*/, 1];
+                res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
+                return [3 /*break*/, 15];
+            case 1:
+                if (!(Number.isNaN(valid_height) && Number.isNaN(valid_width))) return [3 /*break*/, 2];
                 // No height nor width
                 console.log('image without height & width');
                 if (fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg")) &&
@@ -77,80 +77,80 @@ image.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                         .status(404)
                         .send('put you image in the images folder & enter the height and width as positive number');
                 }
-                return [3 /*break*/, 14];
-            case 1:
-                if (!(valid_height > 0 && valid_width > 0)) return [3 /*break*/, 5];
+                return [3 /*break*/, 15];
+            case 2:
+                if (!(valid_height > 0 && valid_width > 0)) return [3 /*break*/, 6];
                 // both the height & width are positive numbers
                 console.log('Both height & width are positive');
-                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 3];
+                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 4];
                 // we found the image in images folder and ready for resizing with the desired height and width
                 console.log('we found the image in images folder and ready for resizing with the desired height and width');
-                return [4 /*yield*/, (0, resize_1.default)(valid_height, valid_width, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))];
-            case 2:
-                _b.sent();
-                res.sendFile("".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
-                return [3 /*break*/, 4];
+                return [4 /*yield*/, (0, resize_1.default)(valid_height, valid_width, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))];
             case 3:
+                _b.sent();
+                res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
+                return [3 /*break*/, 5];
+            case 4:
                 if (fs_1.default
-                    .readdirSync(images_path_1.default)
+                    .readdirSync("".concat(images_path_1.default, "/cashing"))
                     .includes("".concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"))) {
                     // if we resized the image before so no need to resize just get it
                     console.log('we resized the image before so no need to resize just get it');
-                    res.sendFile("".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
+                    res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_width, ".jpg"));
                 }
                 else {
                     // the height and width are positive numbers but the image is not found in the image folder
                     console.log('the height and width are positive numbers but the image is not found in the image folder');
                     res.status(404).send('put you image in the images folder');
                 }
-                _b.label = 4;
-            case 4: return [3 /*break*/, 14];
-            case 5:
+                _b.label = 5;
+            case 5: return [3 /*break*/, 15];
+            case 6:
                 if (!(valid_height > 0 &&
                     Number.isNaN(valid_width) &&
-                    width == undefined)) return [3 /*break*/, 9];
+                    width == undefined)) return [3 /*break*/, 10];
                 // the height is positive numbers & No width
                 console.log('the height is positive numbers & No width');
-                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 7];
+                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 8];
                 // Only the height is positive numbers & the image is found in the image folder
                 console.log('the height is positive numbers & the image is found in the image folder');
-                return [4 /*yield*/, (0, resize_1.default)(valid_height, valid_height, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_height, ".jpg"))];
-            case 6:
-                _b.sent();
-                res.sendFile("".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_height, ".jpg"));
-                return [3 /*break*/, 8];
+                return [4 /*yield*/, (0, resize_1.default)(valid_height, valid_height, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_height, ".jpg"))];
             case 7:
+                _b.sent();
+                res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_height, "x").concat(valid_height, ".jpg"));
+                return [3 /*break*/, 9];
+            case 8:
                 // Only the height is positive number but the image is not found in the image folder
                 console.log('Only the height is positive number but the image is not found in the image folder');
                 res.status(404).send('put you image in the images folder');
-                _b.label = 8;
-            case 8: return [3 /*break*/, 14];
-            case 9:
-                if (!(valid_width > 0 && height == undefined)) return [3 /*break*/, 13];
+                _b.label = 9;
+            case 9: return [3 /*break*/, 15];
+            case 10:
+                if (!(valid_width > 0 && height == undefined)) return [3 /*break*/, 14];
                 // the width is positive numbers & No height
                 console.log('the width is positive numbers & No height');
-                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 11];
+                if (!fs_1.default.readdirSync(images_path_1.default).includes("".concat(valid_filename, ".jpg"))) return [3 /*break*/, 12];
                 // We found the image in the images folder
                 console.log('We found the image in the images folder');
-                return [4 /*yield*/, (0, resize_1.default)(valid_width, valid_width, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_width, "x").concat(valid_width, ".jpg"))];
-            case 10:
-                _b.sent();
-                res.sendFile("".concat(images_path_1.default, "/").concat(valid_filename, "_resize").concat(valid_width, "x").concat(valid_width, ".jpg"));
-                return [3 /*break*/, 12];
+                return [4 /*yield*/, (0, resize_1.default)(valid_width, valid_width, "".concat(images_path_1.default, "/").concat(valid_filename, ".jpg"), "".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_width, "x").concat(valid_width, ".jpg"))];
             case 11:
+                _b.sent();
+                res.sendFile("".concat(images_path_1.default, "/cashing/").concat(valid_filename, "_resize").concat(valid_width, "x").concat(valid_width, ".jpg"));
+                return [3 /*break*/, 13];
+            case 12:
                 // Only the width is positive number but the image is not found in the image folder
                 console.log('Only the width is positive number but the image is not found in the image folder');
                 res.status(404).send('put you image in the images folder');
-                _b.label = 12;
-            case 12: return [3 /*break*/, 14];
-            case 13:
+                _b.label = 13;
+            case 13: return [3 /*break*/, 15];
+            case 14:
                 // The height or the width or the two are not positive number
                 console.log('The height or the width or the two are not positive number');
                 res
                     .status(404)
                     .send('http://localhost:3000/images?filename={desired_filename}&height={desired_height}&width={desired_width}');
-                _b.label = 14;
-            case 14: return [2 /*return*/];
+                _b.label = 15;
+            case 15: return [2 /*return*/];
         }
     });
 }); });

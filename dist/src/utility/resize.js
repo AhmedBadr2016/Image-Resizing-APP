@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var sharp_1 = __importDefault(require("sharp"));
 // resizing function
-var resize = function (height, width, inputpath, outputpath) { return __awaiter(void 0, void 0, void 0, function () {
+var resizefun = function (height, width, inputpath, outputpath) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, (0, sharp_1.default)(inputpath).resize({ height: height, width: width }).toFile(outputpath)];
@@ -52,4 +52,4 @@ var resize = function (height, width, inputpath, outputpath) { return __awaiter(
         }
     });
 }); };
-exports.default = resize;
+exports.default = resizefun;

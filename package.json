@@ -8,7 +8,7 @@
     "test": "npm run build && npm run jasmine",
     "build": "npx tsc",
     "lint": "eslint . --ext .ts",
-    "prettier": "prettier --config .prettierrc \"**/*.js\"  --write",
+    "prettier": "prettier --config .prettierrc \"**/*.ts\"  --write",
     "jasmine": "jasmine"
   },
   "repository": {

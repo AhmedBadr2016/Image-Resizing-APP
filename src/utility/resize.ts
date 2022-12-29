@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 // resizing function
-const resize = async (
+const resizefun = async (
   height: number,
   width: number,
   inputpath: string,
@@ -10,4 +10,4 @@ const resize = async (
   console.log('resizing is done');
 };
 
-export default resize;
+export default resizefun;
